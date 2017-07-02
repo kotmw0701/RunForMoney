@@ -56,14 +56,6 @@ public class RFMmission implements CommandExecutor {
 		for (String str : mission5) content += str + "\n";
 		content = ChatColor.translateAlternateColorCodes('&', content);
 
-		ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-		BookMeta meta = (BookMeta) book.getItemMeta();
-		meta.setTitle("§e§l§oRunForMoney Mission "+missionnum);
-		List<String> pages = meta.getPages();
-		pages.add(0, content);
-		meta.setPages(pages);
-		book.setItemMeta(meta);
-
 		Team team = RFMscoreboard.sb.getTeam("team_admin");
 		Team team1 = RFMscoreboard.sb.getTeam("team_report");
 		Team team2 = RFMscoreboard.sb.getTeam("team_flee");
@@ -72,6 +64,21 @@ public class RFMmission implements CommandExecutor {
 		for (Player players : Bukkit.getServer().getOnlinePlayers()) {
 			if ((team.hasEntry(players.getName()) || (team1.hasEntry(players.getName())
 					|| (team2.hasEntry(players.getName()) || (team3.hasEntry(players.getName())))))) {
+				
+				//players.getInventory().addItem(book);
+				ItemStack book = getBook(players);
+				players.getInventory().remove(book);
+				BookMeta meta = (BookMeta) book.getItemMeta();
+				meta.setTitle("§e§l§oRunForMoney Mission "+missionnum);
+				List<String> pages = meta.getPages();
+				if(meta.getPageCount() >= 2) {
+					pages.addAll(meta.getPages());
+					pages.remove(1);
+				}
+				pages.add(0, content);
+				pages.add(1, "\n\n\n\n\n\nここからは新しい順に並べられています");
+				meta.setPages(pages);
+				book.setItemMeta(meta);
 				players.getInventory().addItem(book);
 				players.sendMessage("§e通達が届いた。");
 				players.getPlayer().getWorld().playSound(players.getPlayer().getLocation(),
@@ -95,5 +102,16 @@ public class RFMmission implements CommandExecutor {
 				}.runTaskTimer(plugin, 0, 20);
 			}
 		}
+	}
+	
+	private ItemStack getBook(Player player) {
+		for(ItemStack item : player.getInventory().getContents()) {
+			if(item == null || 
+					!(item.getType() == Material.WRITTEN_BOOK) || 
+					!((BookMeta)item.getItemMeta()).getTitle().contains("RunForMoney"))
+				continue;
+			return item;
+		}
+		return new ItemStack(Material.WRITTEN_BOOK);
 	}
 }

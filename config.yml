@@ -1,0 +1,16 @@
+# --- ゲームの設定 --- #
+# --- time: 1500(seconds)
+RFM:
+  setting:
+    time: 1500
+    rejail:
+      endtime: 300
+# --- ミッションの設定 --- #
+mission1: 1
+mission2: 2
+mission3: 3
+mission4: 4
+mission5: 5
+# --- 通達の設定 --- #
+notification1: 1
+notification2: 2

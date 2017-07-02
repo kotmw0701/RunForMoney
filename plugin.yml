@@ -1,0 +1,72 @@
+name: RunForMoney
+main: rfm.RFMmain
+version: 1.0-SNAPSHOT
+author: Phoenix
+commands:
+       bo:
+        permission: op.bo
+        permission-message: You don't have permision
+
+       admin:
+        permission: op.admin
+        permission-message: You don't have permision
+
+       report:
+        permission: op.report
+        permission-message: You don't have permision
+
+       flee:
+        permission: op.flee
+        permission-message: You don't have permision
+
+       hunter:
+        permission: op.hunter
+        permission-message: You don't have permision
+
+       jail:
+        permission: op.jail
+        permission-message: You don't have permision
+
+       survivor:
+        permission: op.survivor
+        permission-message: You don't have permision
+
+       aj:
+        permission: op.aj
+        permission-message: You don't have permision
+
+       rejail:
+        permission: op.rejail
+        permission-message: You don't have permision
+
+       rfm:
+        permission: op.rfm
+        permission-message: You don't have permision
+
+       mission:
+        permission: op.mission
+        permission-message: You don't have permision
+
+       notification:
+        permission: op.notification
+        permission-message: You don't have permision
+
+       rfmreload:
+        permission: op.rfm
+        permission-message: You don't have permision
+
+       fw:
+        permission: op.fwarn
+        permission-message: You don't have permision
+
+       fwarn:
+        permission: op.fwarn
+        permission-message: You don't have permision
+
+       hw:
+        permission: op.hwarn
+        permission-message: You don't have permision
+
+       hwarn:
+        permission: op.hwarn
+        permission-message: You don't have permision

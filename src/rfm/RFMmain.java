@@ -6,6 +6,10 @@ import java.io.IOException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -56,6 +60,8 @@ public class RFMmain extends JavaPlugin {
     public static String prefix = "§4[RFM] §f";
 
     public static int time;
+    
+    public static BossBar bossbar = Bukkit.createBossBar("", BarColor.PURPLE, BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
 
 	public static final String StatsBaseDirPath = "plugins/RunForMoney/";
 

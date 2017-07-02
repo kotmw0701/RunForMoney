@@ -32,8 +32,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 
-import com.connorlinfoot.actionbarapi.ActionBarAPI;
-
+import jp.kotmw.together.util.Title;
 import rfm.RFMmain;
 import rfm.RFMscoreboard;
 import rfm.RFMutil;
@@ -133,7 +132,7 @@ public class RFMlistener implements Listener {
 					return;
 				}
 				event.setCancelled(true);
-				ActionBarAPI.sendActionBar(player, "§e⚠ダッシュジャンプはできません⚠");
+				Title.sendActionBar(player, "§e⚠ダッシュジャンプはできません⚠");
 			}
 		}
 
@@ -204,7 +203,7 @@ public class RFMlistener implements Listener {
 				Player target = (Player) event.getRightClicked();
 				if ((target.getScoreboard().getPlayerTeam(target).getName().equalsIgnoreCase("team_flee") || (target
 						.getScoreboard().getPlayerTeam(target).getName().equalsIgnoreCase("team_survivor")))) {
-					ActionBarAPI.sendActionBar(target, "§e⚠通報されています！⚠");
+					Title.sendActionBar(target, "§e⚠通報されています！⚠");
 					for (Player players : Bukkit.getOnlinePlayers()) {
 						if (players.getScoreboard().getPlayerTeam(players).getName().equalsIgnoreCase("team_hunter")) {
 							Location loc = target.getLocation();

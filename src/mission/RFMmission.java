@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
-import me.confuser.barapi.BarAPI;
 import rfm.RFMmain;
 import rfm.RFMscoreboard;
 
@@ -29,275 +28,72 @@ public class RFMmission implements CommandExecutor {
 		this.plugin = plugin;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("mission")) {
-			if (args.length == 0) {
+			if (args.length < 2 ) {
 				sender.sendMessage(ChatColor.GREEN + "/mission [番号] [ミッション時間]");
 				return false;
 			}
-
-			if (args.length == 1) {
-				sender.sendMessage(ChatColor.GREEN + "/mission [番号] [ミッション時間]");
+			try {
+				if (args[0].equals("1")) mission(1, args[1]);
+				else if (args[0].equals("2")) mission(2, args[1]);
+				else if (args[0].equals("3")) mission(3, args[1]);
+				else if (args[0].equals("4")) mission(4, args[1]);
+				else if (args[0].equals("5")) mission(5, args[1]);
+			} catch (Exception e) {
+				e.printStackTrace();
 				return false;
 			}
-
-			if (args[0].equals("1")) {
-				try {
-					List<String> mission1 = plugin.getConfig().getStringList("mission1");
-					String content = "";
-					for (String str : mission1) {
-						content += str + "\n";
-					}
-					content = ChatColor.translateAlternateColorCodes('&', content);
-
-					ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-					BookMeta meta = (BookMeta) book.getItemMeta();
-					meta.setTitle("§e§l§oRunForMoney Mission 1");
-					meta.setPages(content);
-					book.setItemMeta(meta);
-
-					Team team = RFMscoreboard.sb.getTeam("team_admin");
-					Team team1 = RFMscoreboard.sb.getTeam("team_report");
-					Team team2 = RFMscoreboard.sb.getTeam("team_flee");
-					Team team3 = RFMscoreboard.sb.getTeam("team_jail");
-
-					for (Player players : Bukkit.getServer().getOnlinePlayers()) {
-						if ((team.hasEntry(players.getName()) || (team1.hasEntry(players.getName())
-								|| (team2.hasEntry(players.getName()) || (team3.hasEntry(players.getName())))))) {
-							players.getInventory().addItem(book);
-							players.sendMessage("§e通達が届いた。");
-							players.getPlayer().getWorld().playSound(players.getPlayer().getLocation(),
-									Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-
-							new BukkitRunnable() {
-								int i = Integer.parseInt(args[1]);
-
-								public void run() {
-									if (i > 0) {
-										BarAPI.setMessage(players, ChatColor.RED + "Mission 1 発令中！ " + ChatColor.GOLD
-												+ "ミッション終了まで " + ChatColor.GREEN + RFMscoreboard.Time(i));
-										i--;
-									} else {
-										BarAPI.removeBar(players);
-										cancel();
-									}
-								}
-							}.runTaskTimer(plugin, 0, 20);
-						}
-					}
-				} catch (NumberFormatException ex) {
-					return false;
-				} catch (ArrayIndexOutOfBoundsException ex) {
-					return false;
-				}
-			}
-
-			if (args[0].equals("2")) {
-				try {
-					List<String> mission2 = plugin.getConfig().getStringList("mission2");
-					String content = "";
-					for (String str : mission2) {
-						content += str + "\n";
-					}
-					content = ChatColor.translateAlternateColorCodes('&', content);
-
-					ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-					BookMeta meta = (BookMeta) book.getItemMeta();
-					meta.setTitle("§e§l§oRunForMoney Mission 2");
-					meta.setPages(content);
-					book.setItemMeta(meta);
-
-					Team team = RFMscoreboard.sb.getTeam("team_admin");
-					Team team1 = RFMscoreboard.sb.getTeam("team_report");
-					Team team2 = RFMscoreboard.sb.getTeam("team_flee");
-					Team team3 = RFMscoreboard.sb.getTeam("team_jail");
-
-					for (Player players : Bukkit.getServer().getOnlinePlayers()) {
-						if ((team.hasEntry(players.getName()) || (team1.hasEntry(players.getName())
-								|| (team2.hasEntry(players.getName()) || (team3.hasEntry(players.getName())))))) {
-							players.getInventory().addItem(book);
-							players.sendMessage("§e通達が届いた。");
-							players.getPlayer().getWorld().playSound(players.getPlayer().getLocation(),
-									Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-
-							new BukkitRunnable() {
-								int i = Integer.parseInt(args[1]);
-
-								public void run() {
-									if (i > 0) {
-										BarAPI.setMessage(players, ChatColor.RED + "Mission 2 発令中！ " + ChatColor.GOLD
-												+ "ミッション終了まで " + ChatColor.GREEN + RFMscoreboard.Time(i));
-										i--;
-									} else {
-										BarAPI.removeBar(players);
-										cancel();
-									}
-								}
-							}.runTaskTimer(plugin, 0, 20);
-						}
-					}
-				} catch (NumberFormatException ex) {
-					return false;
-				} catch (ArrayIndexOutOfBoundsException ex) {
-					return false;
-				}
-			}
-
-			if (args[0].equals("3")) {
-				try {
-					List<String> mission3 = plugin.getConfig().getStringList("mission3");
-					String content = "";
-					for (String str : mission3) {
-						content += str + "\n";
-					}
-					content = ChatColor.translateAlternateColorCodes('&', content);
-
-					ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-					BookMeta meta = (BookMeta) book.getItemMeta();
-					meta.setTitle("§e§l§oRunForMoney Mission 3");
-					meta.setPages(content);
-					book.setItemMeta(meta);
-
-					Team team = RFMscoreboard.sb.getTeam("team_admin");
-					Team team1 = RFMscoreboard.sb.getTeam("team_report");
-					Team team2 = RFMscoreboard.sb.getTeam("team_flee");
-					Team team3 = RFMscoreboard.sb.getTeam("team_jail");
-
-					for (Player players : Bukkit.getServer().getOnlinePlayers()) {
-						if ((team.hasEntry(players.getName()) || (team1.hasEntry(players.getName())
-								|| (team2.hasEntry(players.getName()) || (team3.hasEntry(players.getName())))))) {
-							players.getInventory().addItem(book);
-							players.sendMessage("§e通達が届いた。");
-							players.getPlayer().getWorld().playSound(players.getPlayer().getLocation(),
-									Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-
-							new BukkitRunnable() {
-								int i = Integer.parseInt(args[1]);
-
-								public void run() {
-									if (i > 0) {
-										BarAPI.setMessage(players, ChatColor.RED + "Mission 3 発令中！ " + ChatColor.GOLD
-												+ "ミッション終了まで " + ChatColor.GREEN + RFMscoreboard.Time(i));
-										i--;
-									} else {
-										BarAPI.removeBar(players);
-										cancel();
-									}
-								}
-							}.runTaskTimer(plugin, 0, 20);
-						}
-					}
-				} catch (NumberFormatException ex) {
-					return false;
-				} catch (ArrayIndexOutOfBoundsException ex) {
-					return false;
-				}
-			}
-
-			if (args[0].equals("4")) {
-				try {
-					List<String> mission4 = plugin.getConfig().getStringList("mission4");
-					String content = "";
-					for (String str : mission4) {
-						content += str + "\n";
-					}
-					content = ChatColor.translateAlternateColorCodes('&', content);
-
-					ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-					BookMeta meta = (BookMeta) book.getItemMeta();
-					meta.setTitle("§e§l§oRunForMoney Mission 4");
-					meta.setPages(content);
-					book.setItemMeta(meta);
-
-					Team team = RFMscoreboard.sb.getTeam("team_admin");
-					Team team1 = RFMscoreboard.sb.getTeam("team_report");
-					Team team2 = RFMscoreboard.sb.getTeam("team_flee");
-					Team team3 = RFMscoreboard.sb.getTeam("team_jail");
-
-					for (Player players : Bukkit.getServer().getOnlinePlayers()) {
-						if ((team.hasEntry(players.getName()) || (team1.hasEntry(players.getName())
-								|| (team2.hasEntry(players.getName()) || (team3.hasEntry(players.getName())))))) {
-							players.getInventory().addItem(book);
-							players.sendMessage("§e通達が届いた。");
-							players.getPlayer().getWorld().playSound(players.getPlayer().getLocation(),
-									Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-
-							new BukkitRunnable() {
-								int i = Integer.parseInt(args[1]);
-
-								public void run() {
-									if (i > 0) {
-										BarAPI.setMessage(players, ChatColor.RED + "Mission 4 発令中！ " + ChatColor.GOLD
-												+ "ミッション終了まで " + ChatColor.GREEN + RFMscoreboard.Time(i));
-										i--;
-									} else {
-										BarAPI.removeBar(players);
-										cancel();
-									}
-								}
-							}.runTaskTimer(plugin, 0, 20);
-						}
-					}
-				} catch (NumberFormatException ex) {
-					return false;
-				} catch (ArrayIndexOutOfBoundsException ex) {
-					return false;
-				}
-			}
-
-			if (args[0].equals("5")) {
-				try {
-					List<String> mission5 = plugin.getConfig().getStringList("mission5");
-					String content = "";
-					for (String str : mission5) {
-						content += str + "\n";
-					}
-					content = ChatColor.translateAlternateColorCodes('&', content);
-
-					ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-					BookMeta meta = (BookMeta) book.getItemMeta();
-					meta.setTitle("§e§l§oRunForMoney Mission 5");
-					meta.setPages(content);
-					book.setItemMeta(meta);
-
-					Team team = RFMscoreboard.sb.getTeam("team_admin");
-					Team team1 = RFMscoreboard.sb.getTeam("team_report");
-					Team team2 = RFMscoreboard.sb.getTeam("team_flee");
-					Team team3 = RFMscoreboard.sb.getTeam("team_jail");
-
-					for (Player players : Bukkit.getServer().getOnlinePlayers()) {
-						if ((team.hasEntry(players.getName()) || (team1.hasEntry(players.getName())
-								|| (team2.hasEntry(players.getName()) || (team3.hasEntry(players.getName())))))) {
-							players.getInventory().addItem(book);
-							players.sendMessage("§e通達が届いた。");
-							players.getPlayer().getWorld().playSound(players.getPlayer().getLocation(),
-									Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-
-							new BukkitRunnable() {
-								int i = Integer.parseInt(args[1]);
-
-								public void run() {
-									if (i > 0) {
-										BarAPI.setMessage(players, ChatColor.RED + "Mission 5 発令中！ " + ChatColor.GOLD
-												+ "ミッション終了まで " + ChatColor.GREEN + RFMscoreboard.Time(i));
-										i--;
-									} else {
-										BarAPI.removeBar(players);
-										cancel();
-									}
-								}
-							}.runTaskTimer(plugin, 0, 20);
-						}
-					}
-				} catch (NumberFormatException ex) {
-					return false;
-				} catch (ArrayIndexOutOfBoundsException ex) {
-					return false;
-				}
-			}
+			return true;
 		}
 		return false;
+	}
+	
+	private void mission(int missionnum, String timestr) throws NumberFormatException, ArrayIndexOutOfBoundsException{
+		List<String> mission5 = plugin.getConfig().getStringList("mission"+missionnum);
+		String content = "";
+		for (String str : mission5) content += str + "\n";
+		content = ChatColor.translateAlternateColorCodes('&', content);
+
+		ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
+		BookMeta meta = (BookMeta) book.getItemMeta();
+		meta.setTitle("§e§l§oRunForMoney Mission "+missionnum);
+		List<String> pages = meta.getPages();
+		pages.add(0, content);
+		meta.setPages(pages);
+		book.setItemMeta(meta);
+
+		Team team = RFMscoreboard.sb.getTeam("team_admin");
+		Team team1 = RFMscoreboard.sb.getTeam("team_report");
+		Team team2 = RFMscoreboard.sb.getTeam("team_flee");
+		Team team3 = RFMscoreboard.sb.getTeam("team_jail");
+
+		for (Player players : Bukkit.getServer().getOnlinePlayers()) {
+			if ((team.hasEntry(players.getName()) || (team1.hasEntry(players.getName())
+					|| (team2.hasEntry(players.getName()) || (team3.hasEntry(players.getName())))))) {
+				players.getInventory().addItem(book);
+				players.sendMessage("§e通達が届いた。");
+				players.getPlayer().getWorld().playSound(players.getPlayer().getLocation(),
+						Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+				
+				RFMmain.bossbar.addPlayer(players);
+				new BukkitRunnable() {
+					int time = Integer.parseInt(timestr);
+					
+					@Override
+					public void run() {
+						if (time > 0) {
+							RFMmain.bossbar.setTitle(ChatColor.RED + "Mission "+missionnum+" 発令中！ " + ChatColor.GOLD
+									+ "ミッション終了まで " + ChatColor.GREEN + RFMscoreboard.Time(time));
+							time--;
+						} else {
+							RFMmain.bossbar.removePlayer(players);
+							cancel();
+						}
+					}
+				}.runTaskTimer(plugin, 0, 20);
+			}
+		}
 	}
 }
